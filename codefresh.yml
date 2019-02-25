@@ -14,3 +14,32 @@ steps:
       - npm install gulp -g 
       - npm install
       - gulp unit_test
+step_name:
+  type: build
+  title: Step Title
+  description: Free text description
+  working_directory: ${{clone_step_name}}
+  dockerfile: path/to/Dockerfile
+  image_name: owner/new-image-name
+  tag: develop
+  build_arguments:
+    - key=value
+  target: stage1
+  no_cache: false
+  no_cf_cache: false
+  fail_fast: false
+  metadata:
+    set:
+      - qa: pending
+  when:
+    condition:
+      all:
+        noDetectedSkipCI: "includes('${{CF_COMMIT_MESSAGE}}', '[skip ci]') == false"
+  on_success:
+    ...
+  on_fail:
+    ...
+  on_finish:
+    ...
+  retry:
+    ...
